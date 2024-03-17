@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Estudante;
 import com.example.demo.repository.EstudanteRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@AllArgsConstructor
 public class EstudanteService {
 
     private EstudanteRepository estudanteRepository;
 
     public ResponseEntity<Estudante> buscarEstudantePorId(Long id) {
         if (estudanteRepository.existsById(id)) {
-            return  ResponseEntity.status(HttpStatus.OK).body(estudanteRepository.findById(id).get());
+            return ResponseEntity.status(HttpStatus.OK).body(estudanteRepository.findById(id).get());
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
