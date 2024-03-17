@@ -17,6 +17,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 @AllArgsConstructor
 
 public class ArquivoController {
+
+
     private ArquivoService service;
 
     @PostMapping("/upload")
@@ -24,15 +26,15 @@ public class ArquivoController {
         String nomeArquivo = service.salvarArquivo(file);
 
         String caminhoArquivo = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("E:/teste/downloaArquivo")
+                .path("/arquivos/downloaArquivo")
                 .path(nomeArquivo)
                 .toUriString();
 
         return  new Arquivo(nomeArquivo, caminhoArquivo,file.getContentType(), file.getSize());
     }
 
-    @GetMapping ("/downloadArquivo/{nomeArquivo}")
-    public ResponseEntity<Resource> downloadArquivo (String nomeArquivo, HttpServletRequest request) {
+    @GetMapping("/downloaArquivo/{nomeArquivo}")
+    public ResponseEntity<Resource> downloaArquivo (@PathVariable String nomeArquivo, HttpServletRequest request) {
 
         Resource resource = service.carregarArquivo (nomeArquivo);
 

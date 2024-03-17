@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Estudante;
+import com.example.demo.repository.EstudanteRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -13,40 +14,38 @@ import java.util.Map;
 @Service
 public class EstudanteService {
 
-    private static Map<Long, Estudante> listaEstudantes = new HashMap<>();
+    private EstudanteRepository estudanteRepository;
 
     public ResponseEntity<Estudante> buscarEstudantePorId(Long id) {
-        Estudante estudante = listaEstudantes.get(id);
-        if (estudante ==null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (estudanteRepository.existsById(id)) {
+            return  ResponseEntity.status(HttpStatus.OK).body(estudanteRepository.findById(id).get());
         }
-        return  ResponseEntity.status(HttpStatus.OK).body(estudante);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     public List<Estudante> buscarTodosEstudantes () {
-        return new ArrayList<>(listaEstudantes.values());
+        return estudanteRepository.findAll();
     }
 
     public ResponseEntity<Estudante> cadastrarEstudante(Estudante estudante) {
-        listaEstudantes.put(estudante.getId(), estudante);
-        return ResponseEntity.status(HttpStatus.OK).body(estudante);
+        Estudante estudantesSalvo = estudanteRepository.save(estudante);
+        return ResponseEntity.status(HttpStatus.CREATED).body(estudantesSalvo);
         }
 
-    public ResponseEntity<Estudante> atualizarEstudante(Estudante estudante) {
-        Estudante estudanteEncontrado = listaEstudantes.get(estudante.getId());
-        if (estudanteEncontrado ==null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    public ResponseEntity<Estudante> atualizarEstudante(Long id, Estudante estudante) {
+        if (estudanteRepository.existsById(id)) {
+
+            Estudante estudantesSalvo = estudanteRepository.save(estudante);
+            return ResponseEntity.status(HttpStatus.OK).body(estudantesSalvo);
         }
-        listaEstudantes.put(estudante.getId(), estudante);
-        return  ResponseEntity.status(HttpStatus.OK).body(estudanteEncontrado);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
     public ResponseEntity<String> removerEstudante(Long id) {
-        Estudante estudanteEncontrado = listaEstudantes.get(id);
-        if (estudanteEncontrado ==null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        if (estudanteRepository.existsById(id)) {
+            estudanteRepository.deleteById(id);
+            return  ResponseEntity.status(HttpStatus.OK).body("Estudante deletado com Sucesso");
         }
-        listaEstudantes.remove(id);
-        return  ResponseEntity.status(HttpStatus.OK).body("Estudante deletado com Sucesso");
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudante nao encontrado");
     }
 }
