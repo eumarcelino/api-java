@@ -3,6 +3,8 @@ package com.example.demo.service;
 import com.example.demo.entity.Estudante;
 import com.example.demo.repository.EstudanteRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,8 +27,8 @@ public class EstudanteService {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
     }
 
-    public List<Estudante> buscarTodosEstudantes () {
-        return estudanteRepository.findAll();
+    public Page<Estudante> buscarTodosEstudantes (PageRequest page) {
+        return estudanteRepository.findAll(page);
     }
 
     public ResponseEntity<Estudante> cadastrarEstudante(Estudante estudante) {
