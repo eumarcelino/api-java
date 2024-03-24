@@ -1,17 +1,14 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
-@Data
+@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -24,4 +21,15 @@ public class Estudante {
     private String nome;
     private String email;
     private LocalDate dataNascimento;
+
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.MERGE })
+    @JoinColumn(name = "endereco_id", referencedColumnName = "id")
+    private Endereco endereco;
+
+    @OneToMany(mappedBy = "estudante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Livro> livros = new HashSet<>();
+
+    @OneToMany(mappedBy = "estudante")
+    private Set<AvaliacaoCurso> avaliacaoCursos;
+
 }
