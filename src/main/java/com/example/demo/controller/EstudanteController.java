@@ -48,4 +48,10 @@ public class EstudanteController {
         return estudanteService.removerEstudante(id);
     }
 
+    @GetMapping ("/naoAvaliaram")
+    public List<Estudante> buscarEstudantesQueNaoAvaliaram() {
+
+        return estudanteService.buscarEstudantesQueNaoAvaliaram();
+    }
+
 }

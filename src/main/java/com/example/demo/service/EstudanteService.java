@@ -61,4 +61,8 @@ public class EstudanteService {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Estudante nao encontrado");
     }
+
+    public List<Estudante> buscarEstudantesQueNaoAvaliaram() {
+        return estudanteRepository.findByAvaliacaoCursosEstudanteIsNull();
+    }
 }

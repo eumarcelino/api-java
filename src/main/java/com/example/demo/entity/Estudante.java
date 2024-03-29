@@ -30,6 +30,7 @@ public class Estudante {
     private Set<Livro> livros = new HashSet<>();
 
     @OneToMany(mappedBy = "estudante")
+    @JsonIgnore
     private Set<AvaliacaoCurso> avaliacaoCursos;
 
 }
