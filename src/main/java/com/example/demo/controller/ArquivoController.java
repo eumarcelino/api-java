@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Arquivo;
 import com.example.demo.service.ArquivoService;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;

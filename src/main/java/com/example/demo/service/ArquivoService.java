@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.config.ArquivoStorageProperties;
 import exception.ArquivoNaoEncontradoException;
 import exception.UploadArquivoException;
-import jakarta.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;

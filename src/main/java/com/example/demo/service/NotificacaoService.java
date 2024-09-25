@@ -2,7 +2,7 @@ package com.example.demo.service;
 
 import com.corundumstudio.socketio.SocketIONamespace;
 import com.corundumstudio.socketio.SocketIOServer;
-import jakarta.annotation.PreDestroy;
+import javax.annotation.PreDestroy;
 import org.springframework.stereotype.Service;
 
 @Service
